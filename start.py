@@ -4,8 +4,8 @@
    from pyrogram.types import InputPhoto
 
    # Replace these with your own values
-   API_ID = "YOUR_API_ID"  # Get from https://my.telegram.org
-   API_HASH = "YOUR_API_HASH"  # Get from https://my.telegram.org
+   API_ID = "22012880"  # Get from https://my.telegram.org
+   API_HASH = "5b0e07f5a96d48b704eb9850d274fe1d"  # Get from https://my.telegram.org
    BOT_TOKEN = "YOUR_BOT_TOKEN"  # Get from @BotFather
 
    # Path to the folder containing wallpapers
