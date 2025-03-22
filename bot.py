@@ -1,41 +1,50 @@
-   import os
-   import random
-   from pyrogram import Client, filters
-   from pyrogram.types import InputPhoto
+import os
+import random
+import requests
+from pyrogram import Client, filters
 
-   # Replace these with your own values
-   API_ID = "22012880"  # Get from https://my.telegram.org
-   API_HASH = "5b0e07f5a96d48b704eb9850d274fe1d"  # Get from https://my.telegram.org
-   BOT_TOKEN = "8113642693:AAG9yJpZjyhKIP_nhsIIoc8ZsiTJ-gsudLU"  # Get from @BotFather
+# Replace these with your own values
+API_ID = "22012880"  # Get from https://my.telegram.org
+API_HASH = "5b0e07f5a96d48b704eb9850d274fe1d"  # Get from https://my.telegram.org
+BOT_TOKEN = "8113642693:AAG9yJpZjyhKIP_nhsIIoc8ZsiTJ-gsudLU"  # Get from @BotFather
 
-   # Path to the folder containing wallpapers
-   WALLPAPER_FOLDER = "minimalistic-wallpaper-collection/images"
+# GitHub repository details
+GITHUB_REPO = "Ur-amit-01/minimalistic-wallpaper-collection"
+GITHUB_FOLDER = "images"  # Folder containing wallpapers
 
-   # Initialize the Pyrogram client
-   app = Client("wallpaper_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
+# Initialize the Pyrogram client
+app = Client("wallpaper_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
-   # Command to start the bot
-   @app.on_message(filters.command("start"))
-   def start(client, message):
-       message.reply_text("Welcome! Use /gen to get a random wallpaper.")
+# Function to fetch wallpapers from GitHub
+def fetch_wallpapers():
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{GITHUB_FOLDER}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        files = response.json()
+        wallpapers = [file["download_url"] for file in files if file["name"].endswith(('.png', '.jpg', '.jpeg'))]
+        return wallpapers
+    return []
 
-   # Command to send a random wallpaper
-   @app.on_message(filters.command("gen"))
-   def send_wallpaper(client, message):
-       # Get a list of all wallpaper files
-       wallpapers = [f for f in os.listdir(WALLPAPER_FOLDER) if f.endswith(('.png', '.jpg', '.jpeg'))]
+# Command to start the bot
+@app.on_message(filters.command("start"))
+def start(client, message):
+    message.reply_text("Welcome! Use /gen to get a random wallpaper.")
 
-       if not wallpapers:
-           message.reply_text("No wallpapers found!")
-           return
+# Command to send a random wallpaper
+@app.on_message(filters.command("gen"))
+def send_wallpaper(client, message):
+    wallpapers = fetch_wallpapers()
+    if not wallpapers:
+        message.reply_text("No wallpapers found!")
+        return
 
-       # Randomly select a wallpaper
-       random_wallpaper = random.choice(wallpapers)
-       wallpaper_path = os.path.join(WALLPAPER_FOLDER, random_wallpaper)
+    # Randomly select a wallpaper
+    random_wallpaper = random.choice(wallpapers)
 
-       # Send the wallpaper as a photo
-       message.reply_photo(photo=wallpaper_path, caption="Here's your random wallpaper! 🎨")
+    # Send the wallpaper as a photo
+    message.reply_photo(photo=random_wallpaper, caption="Here's your random wallpaper! 🎨")
 
-   # Run the bot
-   print("Bot is running...")
-   app.run()
+# Run the bot
+print("Bot is running...")
+app.run()
+
