@@ -6,7 +6,7 @@
    # Replace these with your own values
    API_ID = "22012880"  # Get from https://my.telegram.org
    API_HASH = "5b0e07f5a96d48b704eb9850d274fe1d"  # Get from https://my.telegram.org
-   BOT_TOKEN = "YOUR_BOT_TOKEN"  # Get from @BotFather
+   BOT_TOKEN = "8113642693:AAG9yJpZjyhKIP_nhsIIoc8ZsiTJ-gsudLU"  # Get from @BotFather
 
    # Path to the folder containing wallpapers
    WALLPAPER_FOLDER = "wallpapers"
