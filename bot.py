@@ -9,7 +9,7 @@
    BOT_TOKEN = "8113642693:AAG9yJpZjyhKIP_nhsIIoc8ZsiTJ-gsudLU"  # Get from @BotFather
 
    # Path to the folder containing wallpapers
-   WALLPAPER_FOLDER = "wallpapers"
+   WALLPAPER_FOLDER = "minimalistic-wallpaper-collection/images"
 
    # Initialize the Pyrogram client
    app = Client("wallpaper_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
